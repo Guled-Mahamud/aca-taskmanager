@@ -8,13 +8,13 @@ resource "azurerm_cdn_frontdoor_profile" "profile" {
 # Endpoint
 resource "azurerm_cdn_frontdoor_endpoint" "endpoint" {
   name                      = var.endpoint_name
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.profile.id
 }
 
 # Custom Domain for Cloudflare
 resource "azurerm_cdn_frontdoor_custom_domain" "custom_domain" {
   name                      = var.custom_name
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.profile.id
   host_name                 = var.custom_domain_name
 
   tls {
@@ -28,7 +28,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "custom_domain" {
 # Origin Group
 resource "azurerm_cdn_frontdoor_origin_group" "origin_group" {
   name                      = var.origin_group_name
-  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.profile.id
 
   load_balancing {
     additional_latency_in_milliseconds = 0
@@ -47,7 +47,7 @@ resource "azurerm_cdn_frontdoor_origin_group" "origin_group" {
 # Origin pointing to Container App
 resource "azurerm_cdn_frontdoor_origin" "fd_origin" {
   name                           = var.origin_name
-  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.origin_group.id
   host_name                      = var.origin_hostname
   origin_host_header             = var.origin_hostname
   http_port                      = 80
@@ -61,8 +61,8 @@ resource "azurerm_cdn_frontdoor_origin" "fd_origin" {
 # Route to container app
 resource "azurerm_cdn_frontdoor_route" "route" {
   name                          = var.route_name
-  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.fd_endpoint.id
-  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.endpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.origin_group.id
   cdn_frontdoor_origin_ids      = [azurerm_cdn_frontdoor_origin.fd_origin.id]
   supported_protocols           = ["Http", "Https"]
   patterns_to_match             = ["/*"]
