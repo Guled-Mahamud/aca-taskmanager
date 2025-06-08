@@ -1,0 +1,84 @@
+name: Terraform Plan & Security Checks
+
+on:
+  push:
+    branches:
+      - dev             # Run only when pushing to the dev branch
+    paths:
+      - 'terraform/**'  # Only when files in the terraform folder are changed
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write  
+
+env:
+  TF_VAR_RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP_NAME }}
+  TF_VAR_STORAGE_ACCOUNT: ${{ secrets.STORAGE_ACCOUNT_NAME }}
+  TF_VAR_CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
+  TF_VAR_TFSTATE_KEY: ${{ secrets.TFSTATE_KEY }}
+
+jobs:
+  terraform_plan_security:
+    name: Terraform Plan & Security Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          auth-type: 'SERVICE_PRINCIPAL'
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.0
+
+      - name: Terraform Init (with remote backend)
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=${{ env.TF_VAR_RESOURCE_GROUP }}" \
+            -backend-config="storage_account_name=${{ env.TF_VAR_STORAGE_ACCOUNT }}" \
+            -backend-config="container_name=${{ env.TF_VAR_CONTAINER_NAME }}" \
+            -backend-config="key=${{ env.TF_VAR_TFSTATE_KEY }}"
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan Preview
+        run: terraform plan -no-color
+
+      - name: Install and Run TFLint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          sudo mv tflint /usr/local/bin/
+          mkdir -p ./terraform/reports
+          tflint --init
+          tflint --format sarif > ./terraform/reports/tflint.sarif
+        continue-on-error: true
+
+      - name: Run Checkov Security Scan
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: terraform/
+          output_format: sarif
+          output_file_path: ./terraform/reports/checkov.sarif
+        continue-on-error: true
+
+      - name: Upload SARIF report for TFLint
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ./terraform/reports/tflint.sarif
+          category: tflint
+
+      - name: Upload SARIF report for Checkov
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: ./terraform/reports/checkov.sarif
+          category: checkov
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
