@@ -92,11 +92,11 @@ variable "cert_path" {
   description = "Path to the PFX certificate file"
 }
 
-variable "cert_password" {
-  type        = string
-  description = "Password for the PFX certificate"
-  sensitive   = true
-}
+#variable "cert_password" {
+  #type        = string
+  #description = "Password for the PFX certificate"
+  #sensitive   = true
+#}
 
 
 # Azure Front Door
@@ -145,5 +145,5 @@ variable "sku_name" {
 
 
 
-# Trigger CI workflow -- --
+# Trigger CI workflow -- ---
 
