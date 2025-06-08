@@ -45,12 +45,15 @@ jobs:
             -backend-config="storage_account_name=${{ env.TF_VAR_STORAGE_ACCOUNT }}" \
             -backend-config="container_name=${{ env.TF_VAR_CONTAINER_NAME }}" \
             -backend-config="key=${{ env.TF_VAR_TFSTATE_KEY }}"
+        working-directory: terraform
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: terraform
 
       - name: Terraform Plan Preview
         run: terraform plan -no-color
+        working-directory: terraform
 
       - name: Install and Run TFLint
         run: |
