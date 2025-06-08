@@ -1,5 +1,5 @@
 output "frontdoor_endpoint_hostname" {
-  value       = azurerm_cdn_frontdoor_endpoint.fd_endpoint.host_name
+  value       = azurerm_cdn_frontdoor_endpoint.endpoint.host_name
   description = "Azure Front Door endpoint hostname"
 }
 
