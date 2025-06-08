@@ -154,3 +154,4 @@ variable "sku_name" {
 }
 
 
+# Trigger CI workflow
