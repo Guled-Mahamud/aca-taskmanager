@@ -169,6 +169,11 @@ variable "tenant_id" {
   type        = string
 }
 
+variable "client_secret" {
+  description = "Azure Client Secret"
+  type        = string
+}
+
 
 
 # Trigger CI workflow -
