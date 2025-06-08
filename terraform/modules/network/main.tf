@@ -18,16 +18,6 @@ resource "azurerm_subnet" "container_subnet" {
 
 }
 
-# Subnet - Application Gateway
-
-  resource "azurerm_subnet" "appgateway_subnet" {
-  name                 = var.appgateway_subnet_name
-  resource_group_name  = var.resource_group
-  virtual_network_name = azurerm_virtual_network.tmvnet.name
-  address_prefixes     = var.appgateway_address_prefixes
-
-
-  }
 
 
  

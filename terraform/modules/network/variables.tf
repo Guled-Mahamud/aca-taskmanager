@@ -43,13 +43,4 @@ variable "container_address_prefixes" {
   description = "Address prefixes for the container subnet"
 }
 
-variable "appgateway_subnet_name" {
-  type        = string
-  description = "Name of the Application Gateway subnet"
-  default     = "appgateway-subnet"
-}
 
-variable "appgateway_address_prefixes" {
-  type        = list(string)
-  description = "Address prefixes for the Application Gateway subnet"
-}
