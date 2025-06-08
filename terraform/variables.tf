@@ -153,10 +153,6 @@ variable "sku_name" {
   default     = "Standard_AzureFrontDoor"
 }
 
-variable "subscription_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
 
 
 # Trigger CI workflow -- -
