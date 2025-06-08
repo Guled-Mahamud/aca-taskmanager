@@ -20,6 +20,9 @@ env:
 jobs:
   terraform_ci:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
 
     steps:
       - name: Checkout repository
@@ -50,6 +53,6 @@ jobs:
       - name: Run Checkov Scan
         uses: bridgecrewio/checkov-action@v12
         with:
-          directory: terraform/
+          directory: .
           output_format: cli
         continue-on-error: true
