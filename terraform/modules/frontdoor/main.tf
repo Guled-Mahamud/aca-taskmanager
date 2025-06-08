@@ -1,12 +1,12 @@
-# Azure Front Door Profile
-resource "azurerm_cdn_frontdoor_profile" "fd_profile" {
+# Profile
+resource "azurerm_cdn_frontdoor_profile" "profile" {
   name                = var.profile_name
   resource_group_name = var.resource_group
   sku_name            = var.sku_name  
 }
 
-# Azure Front Door Endpoint
-resource "azurerm_cdn_frontdoor_endpoint" "fd_endpoint" {
+# Endpoint
+resource "azurerm_cdn_frontdoor_endpoint" "endpoint" {
   name                      = var.endpoint_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
 }
@@ -26,7 +26,7 @@ resource "azurerm_cdn_frontdoor_custom_domain" "custom_domain" {
 
 
 # Origin Group
-resource "azurerm_cdn_frontdoor_origin_group" "fd_origin_group" {
+resource "azurerm_cdn_frontdoor_origin_group" "origin_group" {
   name                      = var.origin_group_name
   cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.fd_profile.id
 
@@ -59,7 +59,7 @@ resource "azurerm_cdn_frontdoor_origin" "fd_origin" {
 }
 
 # Route to container app
-resource "azurerm_cdn_frontdoor_route" "fd_route" {
+resource "azurerm_cdn_frontdoor_route" "route" {
   name                          = var.route_name
   cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.fd_endpoint.id
   cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.fd_origin_group.id
