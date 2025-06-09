@@ -18,7 +18,7 @@ terraform.tfvars
 # Lock info
 .terraform.tfstate.lock.info
 .terraform.lock.hcl
-
+-
 # CLI config
 .terraformrc
 terraform.rc
