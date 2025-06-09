@@ -84,13 +84,13 @@ variable "container_name" {
 }
 
 
-# Certificate (for Application Gateway or Front Door)
+# Certificate (Front Door)
 
 
-variable "cert_path" {
-  type        = string
-  description = "Path to the PFX certificate file"
-}
+#variable "cert_path" {
+  #type        = string
+  #description = "Path to the PFX certificate file"
+#}
 
 #variable "cert_password" {
   #type        = string
