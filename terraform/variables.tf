@@ -88,14 +88,14 @@ variable "container_name" {
 
 
 #variable "cert_path" {
-  #type        = string
-  #description = "Path to the PFX certificate file"
+#type        = string
+#description = "Path to the PFX certificate file"
 #}
 
 #variable "cert_password" {
-  #type        = string
-  #description = "Password for the PFX certificate"
-  #sensitive   = true
+#type        = string
+#description = "Password for the PFX certificate"
+#sensitive   = true
 #}
 
 
