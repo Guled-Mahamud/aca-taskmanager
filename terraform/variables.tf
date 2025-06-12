@@ -27,7 +27,7 @@ variable "vnet_name" {
 variable "vnet_address_space" {
   type        = list(string)
   description = "Address space for the Virtual Network"
-  default = [ "10.0.0.0/16" ]
+  default = ["10.0.0.0/16"]
 }
 
 variable "container_subnet_name" {
@@ -107,36 +107,43 @@ variable "container_name" {
 variable "profile_name" {
   type        = string
   description = "Name of the Azure Front Door profile"
+  default = "taskmanager-fd-profile"
 }
 
 variable "endpoint_name" {
   type        = string
   description = "Name of the Azure Front Door endpoint"
+  default = "taskmanager-endpoint"
 }
 
 variable "origin_group_name" {
   type        = string
   description = "Name of the Front Door origin group"
+  default = "taskmanager-origin-group"
 }
 
 variable "origin_name" {
   type        = string
   description = "Name of the Front Door origin"
+  default = "taskmanager-origin"
 }
 
 variable "origin_hostname" {
   type        = string
   description = "FQDN of the origin (e.g. the Container App's URL)"
+  default = "taskmanager.westeurope.azurecontainerapps.io"
 }
 
 variable "route_name" {
   type        = string
   description = "Name of the Front Door route"
+  default = "taskmanager-route"
 }
 
 variable "custom_domain_name" {
   type        = string
   description = "Custom domain to associate with Front Door (e.g. taskmanager.guled.co.uk)"
+  default = "taskmanager.guled.co.uk"
 }
 
 variable "sku_name" {
