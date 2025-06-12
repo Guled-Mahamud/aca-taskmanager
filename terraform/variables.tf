@@ -27,6 +27,7 @@ variable "vnet_name" {
 variable "vnet_address_space" {
   type        = list(string)
   description = "Address space for the Virtual Network"
+  default = [ "10.0.0.0/16" ]
 }
 
 variable "container_subnet_name" {
@@ -38,6 +39,7 @@ variable "container_subnet_name" {
 variable "container_address_prefixes" {
   type        = list(string)
   description = "Address prefixes for the container subnet"
+  default = ["10.0.0.0/23"]
 }
 
 
