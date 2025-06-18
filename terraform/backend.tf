@@ -4,6 +4,6 @@ terraform {
     storage_account_name = "taskmanagertfstate"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
-
+    
   }
 }
