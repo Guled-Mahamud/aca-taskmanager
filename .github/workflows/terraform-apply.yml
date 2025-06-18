@@ -17,6 +17,11 @@ env:
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
   TFSTATE_KEY: ${{ secrets.TFSTATE_KEY }}
 
+  TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  TF_VAR_client_id:       ${{ secrets.ARM_CLIENT_ID }}
+  TF_VAR_client_secret:   ${{ secrets.ARM_CLIENT_SECRET }}
+  TF_VAR_tenant_id:       ${{ secrets.ARM_TENANT_ID }}
+
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
