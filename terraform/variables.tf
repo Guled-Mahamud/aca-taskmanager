@@ -153,10 +153,7 @@ variable "sku_name" {
 }
 
 
-variable "subscription_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
+
 
 
 # Trigger CI workflow 
