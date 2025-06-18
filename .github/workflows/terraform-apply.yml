@@ -1,15 +1,15 @@
-name: Terraform Apply Infrastructure 
+name: Terraform Apply Infrastructure
 
 on:
   push:
     branches:
-      - 'dev' 
+      - 'dev'
     paths:
-      - 'terraform/**' 
+      - 'terraform/**'
 
 permissions:
-  id-token: write 
-  contents: read 
+  id-token: write
+  contents: read
 
 env:
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
@@ -18,32 +18,36 @@ env:
   TFSTATE_KEY: ${{ secrets.TFSTATE_KEY }}
 
 jobs:
-  terraform_apply: 
-    runs-on: ubuntu-latest 
+  terraform_apply:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: terraform  # ✅ Ensures all `run` steps operate in terraform/
 
     steps:
-    - name: Checkout repository code
-      uses: actions/checkout@v4 
+      - name: Checkout repository code
+        uses: actions/checkout@v4
 
-    - name: Azure Login
-      uses: azure/login@v1 
-      with:
-        creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","tenantId":"${{ secrets.ARM_TENANT_ID }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}"}'
-        auth-type: 'SERVICE_PRINCIPAL'
-        enable-AzPSSession: true
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","tenantId":"${{ secrets.ARM_TENANT_ID }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}"}'
+          auth-type: 'SERVICE_PRINCIPAL'
+          enable-AzPSSession: true
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2 
-      with:
-        terraform_version: 1.7.0 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.0
 
-    - name: Terraform Init
-      run: |
-        terraform init \
-          -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" \
-          -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT_NAME }}" \
-          -backend-config="container_name=${{ env.CONTAINER_NAME }}" \
-          -backend-config="key=${{ env.TFSTATE_KEY }}"
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" \
+            -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT_NAME }}" \
+            -backend-config="container_name=${{ env.CONTAINER_NAME }}" \
+            -backend-config="key=${{ env.TFSTATE_KEY }}"
 
-    - name: Terraform Apply
-      run: terraform apply -auto-approve 
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
