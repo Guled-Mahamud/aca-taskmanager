@@ -8,38 +8,28 @@ on:
       - 'terraform/**'
 
 permissions:
-  id-token: write
   contents: read
 
 env:
-  RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
-  STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
-  CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-  TFSTATE_KEY: ${{ secrets.TFSTATE_KEY }}
-
   TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   TF_VAR_client_id:       ${{ secrets.ARM_CLIENT_ID }}
   TF_VAR_client_secret:   ${{ secrets.ARM_CLIENT_SECRET }}
   TF_VAR_tenant_id:       ${{ secrets.ARM_TENANT_ID }}
+  RESOURCE_GROUP_NAME:    ${{ secrets.RESOURCE_GROUP_NAME }}
+  STORAGE_ACCOUNT_NAME:   ${{ secrets.STORAGE_ACCOUNT_NAME }}
+  CONTAINER_NAME:         ${{ secrets.CONTAINER_NAME }}
+  TFSTATE_KEY:            ${{ secrets.TFSTATE_KEY }}
 
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: terraform  # ✅ Ensures all `run` steps operate in terraform/
+        working-directory: terraform
 
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","tenantId":"${{ secrets.ARM_TENANT_ID }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}"}'
-          auth-type: 'SERVICE_PRINCIPAL'
-          enable-AzPSSession: true
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
