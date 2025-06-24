@@ -12,39 +12,59 @@ permissions:
   contents: read
 
 env:
-  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-  ARM_CLIENT_ID:       ${{ secrets.ARM_CLIENT_ID }}
-  ARM_CLIENT_SECRET:   ${{ secrets.ARM_CLIENT_SECRET }}
-  ARM_TENANT_ID:       ${{ secrets.ARM_TENANT_ID }}
-
+  # Azure backend configuration
   RESOURCE_GROUP_NAME: ${{ secrets.RESOURCE_GROUP_NAME }}
   STORAGE_ACCOUNT_NAME: ${{ secrets.STORAGE_ACCOUNT_NAME }}
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
   TFSTATE_KEY: ${{ secrets.TFSTATE_KEY }}
 
+  # Azure provider credentials
+  ARM_CLIENT_ID:       ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET:   ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID:       ${{ secrets.ARM_TENANT_ID }}
+
 jobs:
   terraform_apply:
     runs-on: ubuntu-latest
+
     defaults:
       run:
-        working-directory: terraform
+        working-directory: terraform  # Points to your Terraform root dir
 
     steps:
-      - name: Checkout repository code
-        uses: actions/checkout@v4
+    - name: Checkout repository code
+      uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.7.0
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: |
+          {
+            "clientId": "${{ secrets.ARM_CLIENT_ID }}",
+            "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}",
+            "tenantId": "${{ secrets.ARM_TENANT_ID }}",
+            "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+          }
+        enable-AzPSSession: true
 
-      - name: Terraform Init
-        run: |
-          terraform init \
-            -backend-config="resource_group_name=${RESOURCE_GROUP_NAME}" \
-            -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
-            -backend-config="container_name=${CONTAINER_NAME}" \
-            -backend-config="key=${TFSTATE_KEY}"
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.7.0
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+    - name: Terraform Init
+      run: |
+        terraform init \
+          -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" \
+          -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT_NAME }}" \
+          -backend-config="container_name=${{ env.CONTAINER_NAME }}" \
+          -backend-config="key=${{ env.TFSTATE_KEY }}"
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        TF_VAR_client_id:       ${{ secrets.ARM_CLIENT_ID }}
+        TF_VAR_client_secret:   ${{ secrets.ARM_CLIENT_SECRET }}
+        TF_VAR_subscription_id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        TF_VAR_tenant_id:       ${{ secrets.ARM_TENANT_ID }}
