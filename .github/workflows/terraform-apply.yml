@@ -30,7 +30,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform  # Points to your Terraform root dir
+        working-directory: terraform  
 
     steps:
     - name: Checkout repository code
@@ -60,6 +60,11 @@ jobs:
           -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT_NAME }}" \
           -backend-config="container_name=${{ env.CONTAINER_NAME }}" \
           -backend-config="key=${{ env.TFSTATE_KEY }}"
+          
+     
+    - name: Terraform Validate
+      run: terraform validate
+
 
     - name: Terraform Apply
       run: terraform apply -auto-approve
