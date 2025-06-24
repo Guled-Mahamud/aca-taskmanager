@@ -33,7 +33,7 @@ variable "container_env" {
 variable "container_name" {
   type        = string
   description = "The name of the container within the app"
-  default     = "taskmanager"
+  default     = "taskmanagerapp"
 }
 
 

@@ -82,23 +82,10 @@ variable "app_name" {
 variable "container_name" {
   type        = string
   description = "Name of the container"
-  default     = "taskmanager"
+  default     = "taskmanagerapp"
 }
 
 
-# Certificate (Front Door)
-
-
-#variable "cert_path" {
-#type        = string
-#description = "Path to the PFX certificate file"
-#}
-
-#variable "cert_password" {
-#type        = string
-#description = "Password for the PFX certificate"
-#sensitive   = true
-#}
 
 
 # Azure Front Door
