@@ -53,14 +53,16 @@ jobs:
       with:
         terraform_version: 1.7.0
 
-    - name: Terraform Init
+    - name: Terraform Init (Remote Backend)
       run: |
         terraform init \
+          -reconfigure \
+          -upgrade \
           -backend-config="resource_group_name=${{ env.RESOURCE_GROUP_NAME }}" \
           -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT_NAME }}" \
           -backend-config="container_name=${{ env.CONTAINER_NAME }}" \
           -backend-config="key=${{ env.TFSTATE_KEY }}"
-          
+
      
     - name: Terraform Validate
       run: terraform validate
