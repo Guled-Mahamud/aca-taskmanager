@@ -23,13 +23,9 @@ terraform.tfvars
 .terraformrc
 terraform.rc
 
-# Terraform plan output (optional)
+# Terraform plan output 
 *.tfplan
 
-
-# Certificates
-
-certs/*.pfx
 
 # Environments
 .env
