@@ -18,12 +18,14 @@ The goal was to:
 
 ## **Architecture Diagram**
 
-![alt text](<ACA project (2).png>)
+<!-- Architecture diagram -->
+![Architecture Diagram](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/aca-project.png?raw=true)
 
 ## **🎥Task Manager Demo**
 
 
-![App demo](documents/app-demo.gif)
+![App Demo](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/tmdemo.gif?raw=true)
+
 
 
 
@@ -75,17 +77,24 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 ----
 ###  **GitHub Actions (CICD):**
 
-**Push-docker-image.yml workflow** :repeat:
+<!-- CI/CD pipeline screenshots -->
 
-![alt text](<docker image push .png>)
+ **Push Docker Image**  :repeat:
 
-**Terraform-plan.yml workflow** :repeat:
+  ![Push Docker Image](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/docker-image-push.png?raw=true)
 
-![alt text](<terraform plan.png>)
 
-**Terraform-apply.yml workflow** :repeat:
 
-![alt text](<terraform apply .png>)
+**Terraform Plan**  :repeat:
+
+  ![Terraform Plan](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/terraform-plan.png?raw=true)
+
+
+ **Terraform Apply**  :repeat:
+
+  ![Terraform Apply](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/terraform-apply.png?raw=true)
+
+ 
 
 ----
 
@@ -93,17 +102,28 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 
 :arrow_forward: **Azure Container Apps Overview**
 
-![alt text](<container apps.png>)
-![alt text](<container website link.png>)
+<!-- App screenshots -->
+![Task Manager UI](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/container-apps.png?raw=true)
+
+![Web App Link](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/container-website-link.png?raw=true)
 
 
 
  :arrow_forward: **Azure Front Door Route & DNS Configuration**
 
-![alt text](<frontdoor route.png>)
-![alt text](<front door end point website link.png>)
+<!-- Front Door setup -->
+
+ **Route Configuration:**  
+  ![Front Door Route](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/frontdoor-route.png?raw=true)
+
+ **Endpoint Overview:**  
+  ![Front Door Endpoint](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/frontdoor-endpoint.png?raw=true)
+
+
 
 ----
 ### Website link
 
 https://taskmanager.guled.co.uk
+
+ ![app website](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/container-overview.png?raw=true)
