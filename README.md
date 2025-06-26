@@ -44,56 +44,64 @@ The goal was to:
 
 
 
-## **Project Structure**
 
+
+## **Project Structure**
+```
 ├── .github
-│   └── workflows
-│       ├── push-docker-image.yml       # CI: Build and push Docker image to ACR
-│       ├── terraform-plan.yml          # CI: Terraform plan to preview changes
-│       ├── terraform-apply.yml         # CD: Terraform apply to deploy infra
-│       └── terraform-destroy.yml       # CD: Terraform destroy to tear down infra
+│ └── workflows
+│ ├── push-docker-image.yml     # CI: Build and push Docker image to ACR
+│ ├── terraform-plan.yml        # CI: Terraform plan to preview changes
+│ ├── terraform-apply.yml       # CD: Terraform apply to deploy infra
+│ └── terraform-destroy.yml     # CD: Terraform destroy to tear down infra
 │
-├── app2                                # Python task manager app
-│   ├── static
-│   │   ├── script.js
-│   │   └── style.css
-│   ├── templates
-│   │   └── index.html
-│   ├── [app.py](http://app.py/)
-│   └── requirements.txt
+├── app2                        # Python task manager app
+│ ├── static
+│ │ ├── script.js
+│ │ └── style.css
+│ ├── templates
+│ │ └── index.html
+│ ├── app.py
+│ └── requirements.txt
 │
 ├── docs
 │
 ├── terraform
-│   ├── modules                         # Terraform modules for reusable infra
-│   │   ├── container_app
-│   │   ├── container_registry
-│   │   ├── frontdoor
-│   │   ├── network
-│   │   └── role_assignment
-│   ├── [backend.tf](http://backend.tf/)                      # Remote backend config (e.g., Azure Storage)
-│   ├── [main.tf](http://main.tf/)
-│   ├── [outputs.tf](http://outputs.tf/)
-│   ├── [providers.tf](http://providers.tf/)
-│   └── [variables.tf](http://variables.tf/)
+│ ├── modules                   # Terraform modules for reusable infra
+│ │ ├── container_app
+│ │ ├── container_registry
+│ │ ├── frontdoor
+│ │ ├── network
+│ │ └── role_assignment
+│ ├── backend.tf               # Remote backend config (e.g., Azure Storage)
+│ ├── main.tf
+│ ├── outputs.tf
+│ ├── providers.tf
+│ └── variables.tf
 │
 ├── .dockerignore
 ├── .gitignore
 ├── Dockerfile
-└── [README.md](http://readme.md/)
+└── README.md
+```
+
+
 ## Azure Deployment Workflow
 
 The deployment of the **task manager application** is fully automated using GitHub Actions and Terraform, across the following stages:
 
-#### 1. Container Build & Push (`push-docker-image.yml`)
+#### 1. **Dockerisation**  
+   The task manager app (`app2/`) is containerised using the Dockerfile (located in the project root based on your structure). This ensures a consistent environment for deployment.
+
+#### 2. Container Build & Push (`push-docker-image.yml`)
 
 Changes to the `app/` folder or `Dockerfile` trigger this workflow. It builds the Docker image, scans it for vulnerabilities using **Trivy**, and pushes it to **Azure Container Registry (ACR)**.
 
-#### 2. Terraform Validation (`terraform-plan.yml`)
+#### 3. Terraform Validation (`terraform-plan.yml`)
 
 When a pull request is created, this pipeline runs `terraform plan`, **TFLint**, and **Checkov** against files in the `terraform/` directory to catch errors and security risks before merge.
 
-#### 3. Infrastructure Provisioning (`terraform-apply.yml`)
+#### 4. Infrastructure Provisioning (`terraform-apply.yml`)
 
 After merging to `main`, this job provisions all infrastructure using **Terraform**:
 
@@ -102,10 +110,18 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 - **Virtual network** & identity
 - **Azure Front Door** for secure public access
 
-### 🌍 Live Deployment
+
+#### 5. Infrastructure destroy (`terraform-destroy.yml`)  
+   This manually triggered workflow safely destroys all provisioned Azure infrastructure using `terraform destroy`.
+
+
+
+### 6.🌍 Live Deployment
 
 **Azure Container Apps** pulls the latest Docker image from ACR, and **Azure Front Door** routes HTTPS traffic to the app via your custom domain. The task manager becomes instantly live for users.
 
+#### 7. Infrastructure destroy (`terraform-destroy.yml`)  
+   This manually triggered workflow safely destroys all provisioned Azure infrastructure using `terraform destroy`.
 
 ----
 ###  **GitHub Actions (CICD):**
