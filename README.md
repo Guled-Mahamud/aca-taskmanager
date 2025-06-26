@@ -183,7 +183,6 @@ They are referenced within the GitHub workflows (`push-docker-image.yml`, `terra
 
 https://taskmanager.guled.co.uk
 ----
-### :page_facing_up: Licence
+#### :page_facing_up: Licence
 
 Licensed under the MIT Licence.
------
