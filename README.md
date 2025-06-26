@@ -2,7 +2,7 @@
 
 **Task Manager** application is designed to help users track daily tasks, whether it's replying to emails, taking a walk, or preparing for tomorrow. The app allows you to add, complete, or delete tasks via a sleek web interface.
 
-This project automates the full lifecycle of task manager web application from local development to live deployment on Azure. it showcases secure and scalable deployment using **Terraform**, **GitHub Actions**, **Azure Container Apps**, **Azure Front Door**, and **Cloudflare** for DNS management.
+This project automates the full lifecycle of task manager application from local development to live deployment on Azure. it showcases secure and scalable deployment using **Terraform**, **GitHub Actions**, **Azure Container Apps**, **Azure Front Door**, and **Cloudflare** for DNS management.
 
 The goal was to:
 
@@ -55,7 +55,7 @@ The goal was to:
 │ ├── terraform-apply.yml       # CD: Terraform apply to deploy infra
 │ └── terraform-destroy.yml     # CD: Terraform destroy to tear down infra
 │
-├── app2                        # Python task manager app
+├── app2                        # task manager app
 │ ├── static
 │ │ ├── script.js
 │ │ └── style.css
