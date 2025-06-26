@@ -6,7 +6,7 @@ This project automates the full lifecycle of task manager web application from l
 
 The goal was to:
 
-- Containerise a Python web app
+- Containerise **Task Manager app**
 - Push it securely to **Azure Container Registry (ACR)**
 - Provision infrastructure as code using **Terraform**
 - Enable end-to-end CI/CD using **GitHub Actions**
@@ -73,7 +73,7 @@ The goal was to:
 │ │ ├── frontdoor
 │ │ ├── network
 │ │ └── role_assignment
-│ ├── backend.tf               # Remote backend config (e.g., Azure Storage)
+│ ├── backend.tf               # Remote backend config 
 │ ├── main.tf
 │ ├── outputs.tf
 │ ├── providers.tf
@@ -114,7 +114,7 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 
 #### 5.🌍 Live Deployment
 
-**Azure Container Apps** pulls the latest Docker image from ACR, and **Azure Front Door** routes HTTPS traffic to the app via your custom domain. The task manager becomes instantly live for users.
+**Azure Container Apps** pulls the latest Docker image from ACR, and **Azure Front Door** routes HTTPS traffic to the app via the custom domain. The task manager becomes instantly live for users.
 
 #### 6. Infrastructure destroy (`terraform-destroy.yml`)  
    This manually triggered workflow safely destroys all provisioned Azure infrastructure using `terraform destroy`.
@@ -125,13 +125,13 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 
 This project uses **GitHub Secrets** to securely manage sensitive values used during CI/CD workflows. Secrets include Azure credentials, Terraform backend configuration and environment specific variables.
 
-They are referenced within the GitHub Actions workflows (`push-docker-image.yml`, `terraform-plan.yml`, `terraform-apply.yml`) to:
+They are referenced within the GitHub workflows (`push-docker-image.yml`, `terraform-plan.yml`, `terraform-apply.yml`) to:
 
 - Authenticate to Azure using a service principal
 - Configure remote Terraform state
 - Securely deploy resources and container images
 - Provide runtime variables to Terraform without exposing them in code
-
+----
 ##  **GitHub Actions (CICD):**
 
 <!-- CI/CD pipeline screenshots -->
@@ -153,9 +153,9 @@ They are referenced within the GitHub Actions workflows (`push-docker-image.yml`
 
  
 
-----
+---
 
-### **Web App on Azure**
+## :large_blue_circle:**Azure container app & Front Door:**
 
 :arrow_forward: **Azure Container Apps Overview**
 
@@ -182,7 +182,8 @@ They are referenced within the GitHub Actions workflows (`push-docker-image.yml`
 ### Website link
 
 https://taskmanager.guled.co.uk
-
+----
 ### :page_facing_up: Licence
 
 Licensed under the MIT Licence.
+-----
