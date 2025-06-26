@@ -1,6 +1,6 @@
 # **Overview**
 
-**Task Manager** application is designed to help users track daily tasks, whether it's replying to emails, taking a walk, or preparing for tomorrow. The app allows you to add, complete, or delete tasks via a sleek web interface or using its lightweight API.
+**Task Manager** application is designed to help users track daily tasks, whether it's replying to emails, taking a walk, or preparing for tomorrow. The app allows you to add, complete, or delete tasks via a sleek web interface.
 
 This project automates the full lifecycle of task manager web application from local development to live deployment on Azure. it showcases secure and scalable deployment using **Terraform**, **GitHub Actions**, **Azure Container Apps**, **Azure Front Door**, and **Cloudflare** for DNS management.
 
