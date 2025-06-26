@@ -91,11 +91,11 @@ The goal was to:
 The deployment of the **task manager application** is fully automated using GitHub Actions and Terraform, across the following stages:
 
 #### 1. **Dockerisation**  
-   The task manager app (`app2/`) is containerised using the Dockerfile (located in the project root based on your structure). This ensures a consistent environment for deployment.
+   The task manager app (`app2/`) is containerised using the Dockerfile (located in the project root based on the structure). This ensures a consistent environment for deployment.
 
 #### 2. Container Build & Push (`push-docker-image.yml`)
 
-Changes to the `app/` folder or `Dockerfile` trigger this workflow. It builds the Docker image, scans it for vulnerabilities using **Trivy**, and pushes it to **Azure Container Registry (ACR)**.
+Changes to the `app2/` folder or `Dockerfile` trigger this workflow. It builds the Docker image, scans it for vulnerabilities using **Trivy**, and pushes it to **Azure Container Registry (ACR)**.
 
 #### 3. Terraform Validation (`terraform-plan.yml`)
 
@@ -111,20 +111,28 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 - **Azure Front Door** for secure public access
 
 
-#### 5. Infrastructure destroy (`terraform-destroy.yml`)  
-   This manually triggered workflow safely destroys all provisioned Azure infrastructure using `terraform destroy`.
 
-
-
-### 6.🌍 Live Deployment
+#### 5.🌍 Live Deployment
 
 **Azure Container Apps** pulls the latest Docker image from ACR, and **Azure Front Door** routes HTTPS traffic to the app via your custom domain. The task manager becomes instantly live for users.
 
-#### 7. Infrastructure destroy (`terraform-destroy.yml`)  
+#### 6. Infrastructure destroy (`terraform-destroy.yml`)  
    This manually triggered workflow safely destroys all provisioned Azure infrastructure using `terraform destroy`.
 
 ----
-###  **GitHub Actions (CICD):**
+
+## 🔐 GitHub Secrets
+
+This project uses **GitHub Secrets** to securely manage sensitive values used during CI/CD workflows. Secrets include Azure credentials, Terraform backend configuration and environment specific variables.
+
+They are referenced within the GitHub Actions workflows (`push-docker-image.yml`, `terraform-plan.yml`, `terraform-apply.yml`) to:
+
+- Authenticate to Azure using a service principal
+- Configure remote Terraform state
+- Securely deploy resources and container images
+- Provide runtime variables to Terraform without exposing them in code
+
+##  **GitHub Actions (CICD):**
 
 <!-- CI/CD pipeline screenshots -->
 
@@ -175,4 +183,6 @@ After merging to `main`, this job provisions all infrastructure using **Terrafor
 
 https://taskmanager.guled.co.uk
 
- ![app website](https://github.com/Guled-Mahamud/aca-taskmanager/blob/main/docs/assets/container-overview.png?raw=true)
+### :page_facing_up: Licence
+
+Licensed under the MIT Licence.
