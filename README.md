@@ -2,15 +2,15 @@
 
 **Task Manager** application is designed to help users track daily tasks, whether it's replying to emails, taking a walk, or preparing for tomorrow. The app allows you to add, complete, or delete tasks via a sleek web interface or using its lightweight API.
 
-This project automates the full lifecycle of task manager web application from local development to live deployment on Azure. it showcases secure and scalable deployment using **Terraform**, **GitHub Actions**, **Azure Container Apps**, and **Azure Front Door**.
+This project automates the full lifecycle of task manager web application from local development to live deployment on Azure. it showcases secure and scalable deployment using **Terraform**, **GitHub Actions**, **Azure Container Apps**, **Azure Front Door**, and **Cloudflare** for DNS management.
 
 The goal was to:
 
 - Containerise a Python web app
-- Push it securely to Azure Container Registry (ACR)
-- Provision infrastructure as code using Terraform
-- Enable end-to-end CI/CD using GitHub Actions
-- Serve the app publicly via custom HTTPS domain using Azure Front Door
+- Push it securely to **Azure Container Registry (ACR)**
+- Provision infrastructure as code using **Terraform**
+- Enable end-to-end CI/CD using **GitHub Actions**
+- Serve the app publicly via custom **HTTPS domain** using **Azure Front Door**, with DNS resolution managed by **Cloudflare**
 
 
 
