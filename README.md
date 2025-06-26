@@ -20,9 +20,10 @@ The goal was to:
 
 ![alt text](<ACA project (2).png>)
 
-## **Task Manager application demo**
+## **🎥Task Manager Demo**
 
-<video controls src="Screen Recording 2025-06-25 190852.mp4" title="Title"></video>
+
+![App demo](documents/app-demo.gif)
 
 
 
