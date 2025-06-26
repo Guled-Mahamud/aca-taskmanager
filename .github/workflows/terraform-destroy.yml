@@ -2,8 +2,7 @@ name: Terraform Destroy Infra
 
 on:
   workflow_dispatch:
-    branches:
-      - dev
+   
 
 permissions:
   id-token: write
