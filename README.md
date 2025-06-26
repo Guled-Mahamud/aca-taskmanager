@@ -46,8 +46,41 @@ The goal was to:
 
 ## **Project Structure**
 
-
-
+├── .github
+│   └── workflows
+│       ├── push-docker-image.yml       # CI: Build and push Docker image to ACR
+│       ├── terraform-plan.yml          # CI: Terraform plan to preview changes
+│       ├── terraform-apply.yml         # CD: Terraform apply to deploy infra
+│       └── terraform-destroy.yml       # CD: Terraform destroy to tear down infra
+│
+├── app2                                # Python task manager app
+│   ├── static
+│   │   ├── script.js
+│   │   └── style.css
+│   ├── templates
+│   │   └── index.html
+│   ├── [app.py](http://app.py/)
+│   └── requirements.txt
+│
+├── docs
+│
+├── terraform
+│   ├── modules                         # Terraform modules for reusable infra
+│   │   ├── container_app
+│   │   ├── container_registry
+│   │   ├── frontdoor
+│   │   ├── network
+│   │   └── role_assignment
+│   ├── [backend.tf](http://backend.tf/)                      # Remote backend config (e.g., Azure Storage)
+│   ├── [main.tf](http://main.tf/)
+│   ├── [outputs.tf](http://outputs.tf/)
+│   ├── [providers.tf](http://providers.tf/)
+│   └── [variables.tf](http://variables.tf/)
+│
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+└── [README.md](http://readme.md/)
 ## Azure Deployment Workflow
 
 The deployment of the **task manager application** is fully automated using GitHub Actions and Terraform, across the following stages:
